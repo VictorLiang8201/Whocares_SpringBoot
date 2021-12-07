@@ -1,0 +1,103 @@
+.mainContent{
+    display: flex;
+}
+/* ------side-menu------- */
+.side-menu{
+    /* border-right: #ccc dotted ; */
+    border-width: 0.25rem;
+}
+.side-menu .button{
+    height: 4rem;
+    background-color: snow;
+    margin: 0px 30px;
+    border: 0.5px #ccc solid;
+    font-size: large;
+}
+
+.button{
+    border: none;
+}
+
+.sideBtn{
+    text-decoration: none;
+    color:saddlebrown;
+    border-radius: 10px;
+}
+
+.sideSpace{
+    height: 13%;
+}
+
+
+
+/* -----DM sideBar---- */
+.dmDate{
+    margin: 50px 30px;
+    background-color: snow;
+    color:saddlebrown;
+}
+
+.accordion-body a{
+    text-decoration: none;
+    color:rgb(63, 56, 52);
+    padding-bottom: 3px;
+}
+
+.accordion-item h2{
+    border: 0.5px #ccc solid;
+
+}
+
+.accordion-header button{
+    background-color: snow;
+}
+
+
+.accordion-button span{
+    color:saddlebrown;
+}
+
+/* ------title------- */
+.title{
+    color:  rgb(117,76,36);
+  
+}
+
+
+/* ------dmcontainer------- */
+.dmcontainer{
+    padding: 2rem;
+}
+
+/* ------dmImage------- */
+
+
+#image {
+    display: flex;
+    justify-content: center;
+	width: inherit;
+    overflow: hidden;
+    justify-content:flex-end;
+  }
+
+#image img {
+    display: block;
+
+  }
+
+#image[zoomed] img {
+    transform-origin: 0% 0%; /* Added */
+    transform: translate(calc(var(--x) * -100%), calc(var(--y) * -100%)) scale(2); /* Updated */
+  }
+
+#myimage{
+    width: 100%;
+
+ 
+}
+
+.downloadBtn{
+    border-radius: 20px;
+    padding: 3px;
+}
+

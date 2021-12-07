@@ -1,0 +1,48 @@
+
+/* --------全域設定------ */
+
+
+.mainQA{
+    width: 100%;
+    display: flex;
+}
+
+/* ------side-menu------- */
+
+.side-menu{
+    /* border-right: black dotted ; */
+    border-width: 0.25rem;
+}
+.side-menu .button{
+    height: 4rem;
+    background-color: snow;
+    margin: 0px 30px;
+    border: 0.5px #ccc solid;
+    font-size: large;
+}
+
+.button{
+    border: none;
+}
+
+.sideBtn{
+    text-decoration: none;
+    color:saddlebrown;
+    border-radius: 10px;
+}
+
+.sideSpace{
+    height: 15%;
+}
+/* ------title------- */
+.title{
+    color:  rgb(117,76,36);
+    border-bottom: rgb(117,76,36) solid 2px;
+  
+}
+
+
+/* q_a .accordionwidth setting */
+.accordionwidth{
+    width: 70vh;
+}

@@ -1,0 +1,235 @@
+.html {
+    height: 100%;
+}
+
+/* --------sideList------ */
+.sideList-title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* border: 0.5px solid #ccc; */
+	background-color: rgb(219, 149, 117);
+	color: white;
+	font-size: 24px;
+	letter-spacing: 2px;
+	padding: 8px 0px;
+}
+
+.discount-title {
+	background-color: rgb(206, 42, 42);
+}
+
+.sideList {
+	padding: 10px;
+	font-size: medium;
+	background-color: white;
+}
+
+.sideList>a {
+	font-family: mainfont-regular;
+	text-decoration: none;
+	font-size: 18px;
+	color: saddlebrown;
+}
+
+.text-center {
+	background-color: white;
+}
+
+
+/* --------right product-title------ */
+.catagory {
+    margin-top: 30px;
+    font-size: 24px;
+	color: rgb(117, 76, 36);
+	margin-bottom: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.catagory>a {
+    margin: 2px 4px;
+    padding: auto;
+    text-decoration: none;
+    color: rgb(117, 76, 36);
+}
+
+.catagory>i{
+    font-size: 26px;
+}
+
+
+/* ---- right product page---- */
+.productPage {
+    margin-left: 50px;
+}
+
+.pictureandinfo{
+	border-bottom: inset 5px rgb(216, 196, 176);
+	margin-bottom: 10px;
+    display: flex;
+}
+
+/* ---- product info---- */
+.productInfo{
+    padding-left: 30px;
+}
+
+.smallStyle{
+    font-family: mainfont-light;
+    color:rgb(60%, 60%, 60%);
+}
+
+.normalStyle{
+    font-size: 22px;
+    color: rgb(56, 48, 45);
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 3px;
+}
+
+.normalStyle div:nth-child(2){
+    text-align: right;
+}
+
+.hidden{
+    height: 35px;
+}
+
+/* 商品名稱 */
+.productInfo h2{
+    color: rgb(117, 76, 36);
+}
+
+/* 活動標籤 */
+#commodityname{
+    border: 0.1px red solid;
+    color: red;
+}
+
+
+
+/* 數量調整 */
+input[type="number"] {
+    border-radius: 5px;
+    width: 100px;
+    height: 25px;
+    background-color: #fff;
+    color: rgb(56, 48, 45);
+    text-align: right;
+    margin-left: 5px;
+}
+
+/* 購買按鈕 */
+.submitBtn{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin: 10px 0px;
+
+}
+
+/* ----商品輪播圖片---- */
+.productPicture {
+    /* width: 35%; */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* 商品小圖片 */
+.smallImage{
+    display: flex;
+    justify-content:center ;
+    padding: 15px 0px;
+}
+
+#submit_Btn{
+    margin: 0px 10px;
+    width: 60px;
+    height: 60px;
+}
+
+
+/* 商品圖片 */
+.img1, .img2, .img3 {
+    height: 280px;
+    width: 300px;
+}
+
+/* 小圖片 */
+/* input {
+    width: 60px;
+    height: 60px;
+    margin: 10px ;
+} */
+
+/* -------- 商品詳情 -------*/
+.productContent {
+    padding: 20px 0px;
+    border-bottom: inset 5px rgb(216, 196, 176);
+}
+
+.contentTitle{
+    font-size: 26px;
+    color: rgb(117, 76, 36);
+    margin-bottom: 20px;
+}
+
+.productContent img{
+    width:inherit;
+}
+
+/* ------comment----- */
+
+
+.product-rate-title{
+    padding: 15px 0px;
+	font-family: mainfont-medium;
+	color: rgb(117, 76, 36);
+
+}
+.score{
+    padding: 15px 0px;
+	font-family: mainfont-light;
+    color: rgb(56, 48, 45);
+    text-align: right;
+}
+
+.comment{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+    background-color: rgb(245, 238, 207);
+    border-radius: 50px;
+    margin-bottom: 15px;
+}
+
+.comment div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color:sienna;
+}
+
+.memberImg img{
+    border-radius: 60px;
+    width: 120px;
+    height: 120px;
+}
+
+.comment div:nth-child(3){
+    color: orange;
+}
+
+.comment div:nth-child(4){
+    color: white;
+    font-size: 14px;
+}
+
+.comment div:nth-child(5){
+    justify-content: start;
+}
+
