@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import j16.t03.springboot.m.entity._05_customer.CustomerBean;
+import j16.t03.springboot._01_model.entity._05_customer.CustomerBean;
 
 @Component
 public class CustomerValidator implements Validator {
