@@ -2,7 +2,7 @@ package j16.t03.springboot.m;
 
 import javax.mail.MessagingException;
 
-import j16.t03.springboot.m.entity.JavaMail;
+import j16.t03.springboot.m.entity._08_Mail.JavaMail;
 
 public class User1 {
 

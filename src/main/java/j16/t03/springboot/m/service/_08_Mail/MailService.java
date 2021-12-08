@@ -1,8 +1,8 @@
-package j16.t03.springboot.m.service;
+package j16.t03.springboot.m.service._08_Mail;
 
 import javax.mail.MessagingException;
 
-import j16.t03.springboot.m.entity.JavaMail;
+import j16.t03.springboot.m.entity._08_Mail.JavaMail;
 
 public interface MailService {
 

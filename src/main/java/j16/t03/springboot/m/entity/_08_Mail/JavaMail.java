@@ -1,4 +1,4 @@
-package j16.t03.springboot.m.entity;
+package j16.t03.springboot.m.entity._08_Mail;
 
 import java.util.Properties;
 
