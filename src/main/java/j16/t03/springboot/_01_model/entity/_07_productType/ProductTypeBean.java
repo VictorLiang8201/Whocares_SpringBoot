@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import j16.t03.springboot._01_model.entity._03_rent.RentProductBean;
 import j16.t03.springboot._01_model.entity._04_shop.ProductBean;
 import lombok.AllArgsConstructor;
@@ -33,10 +35,12 @@ public class ProductTypeBean implements Serializable {
 
 	@OneToMany(mappedBy = "productTypeBean", cascade = { CascadeType.ALL })
 	@Builder.Default
+	@JsonIgnore
 	private Set<RentProductBean> rentProducts = new LinkedHashSet<>();
 	
 	@OneToMany(mappedBy = "productTypeBean", cascade = { CascadeType.ALL })
 	@Builder.Default
-	private Set<ProductBean> product = new LinkedHashSet<>();
+	@JsonIgnore
+	private Set<ProductBean> products = new LinkedHashSet<>();
 
 }

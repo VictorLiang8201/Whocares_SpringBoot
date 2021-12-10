@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import j16.t03.springboot._01_model.entity._02_customerService.CommentBean;
 import j16.t03.springboot._01_model.entity._02_customerService.PromotionBean;
 import j16.t03.springboot._01_model.entity._07_productType.ProductTypeBean;
@@ -36,17 +38,24 @@ public class ProductBean implements Serializable {
 	private String classify;// 租買分類
 	private String prodName;// 商品名稱
 	private Double price;// 商品售價
+	@JsonIgnore
 	private Blob coverImage1;// 圖片1
+	@JsonIgnore
 	private Blob coverImage2;// 圖片2
+	@JsonIgnore
 	private Blob coverImage3;// 圖片3
+	@JsonIgnore
 	private String mimeType;// 圖片類型
+	@JsonIgnore
 	private String mimeType2;// 圖片類型
+	@JsonIgnore
 	private String mimeType3;// 圖片類型
 	private Integer stock;// 庫存數量
 //	private String prodType;// 商品分類代碼 --ProductTypeBean取代此建構子--
 	private String fileName;// 圖片名稱
 	private String fileName2;// 圖片名稱
 	private String fileName3;// 圖片名稱
+	@JsonIgnore
 	private Clob description;// 商品敘述
 //	private Integer promoteId;// 活動編號
 
@@ -60,10 +69,12 @@ public class ProductBean implements Serializable {
 
 	@OneToMany(mappedBy = "productBean", cascade = CascadeType.ALL)
 	@Builder.Default
+	@JsonIgnore
 	Set<BuyItemBean> buyItems = new LinkedHashSet<>();
 	
 	@OneToMany(mappedBy = "productBean", cascade = CascadeType.ALL)
 	@Builder.Default
+	@JsonIgnore
 	Set<CommentBean> comments = new LinkedHashSet<>();
 
 	

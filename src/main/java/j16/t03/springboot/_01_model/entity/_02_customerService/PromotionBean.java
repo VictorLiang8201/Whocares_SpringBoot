@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import j16.t03.springboot._01_model.entity._03_rent.RentItemBean;
 import j16.t03.springboot._01_model.entity._03_rent.RentProductBean;
 import j16.t03.springboot._01_model.entity._04_shop.BuyItemBean;
@@ -49,18 +51,22 @@ public class PromotionBean implements Serializable {
 
 	@OneToMany(mappedBy = "promotionBean", cascade = CascadeType.ALL)
 	@Builder.Default
+	@JsonIgnore
 	Set<RentItemBean> rentItems = new LinkedHashSet<>();
 	
 	@OneToMany(mappedBy = "promotionBean", cascade = CascadeType.ALL)
 	@Builder.Default
+	@JsonIgnore
 	Set<RentProductBean> rentProducts = new LinkedHashSet<>();
 	
 	@OneToMany(mappedBy = "promotionBean", cascade = CascadeType.ALL)
 	@Builder.Default
-	Set<ProductBean> product = new LinkedHashSet<>();
+	@JsonIgnore
+	Set<ProductBean> products = new LinkedHashSet<>();
 	
 	@OneToMany(mappedBy = "promotionBean", cascade = CascadeType.ALL)
 	@Builder.Default
+	@JsonIgnore
 	Set<BuyItemBean> buyItems = new LinkedHashSet<>();
 
 }

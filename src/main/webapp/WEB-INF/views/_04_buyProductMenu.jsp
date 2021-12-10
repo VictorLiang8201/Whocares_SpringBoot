@@ -17,111 +17,166 @@
 
 <!-- bootstrap -->
 <link
-	href="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' />"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- icon -->
-<link rel="stylesheet"
-	href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'/>" />
-<!-- sweetAlert -->
-<!-- sweet alert -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	rel="stylesheet">
+<!-- jQuery -->
 <script
-	src="<c:url value='https://cdn.jsdelivr.net/npm/sweetalert2@9'/>"></script>
-<%-- 	<script src="<c:url value='/js/addFavorite.js' />"></script> --%>
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- VueJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"></script>
+<!-- sweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="<c:url value='/js/sortProducts.js' />"></script>
 <script>
-	window.onload = function() {
-			searchBox();
-		$.ajax({
-			url: '/Whocares/quereyFavoriteBYCustomerID',
-			type: "POST",
-			data: {
-				FK_Customer_ID:<%=session.getAttribute("LoginOK")%>,
-				},
-			success: function(response) { 
-				response.forEach(function (item) {
-					$("#heartFavorite" + item.fk_Product_ID).attr("class","fas fa-heart");
-		           });
-			},
-			error: function() { }
-		});
+					
+function turnPage(page, prodType) {
+	if (page == null) {
+		page = 1;
 	}
-
-	function addCart(){
-		Swal.fire({
-			position : 'center',
-			icon : 'success',
-			title : '商品已加入購物車',
-			showConfirmButton : false,
-			timer : 3000
-		})
+	let url = "<c:url value='/buyMenu/filter?pageNo=' />" + page; 
+	if (prodType != "") {
+		url += "&prodType=" + prodType;
 	}
-	
-	function track(heart, prodId) {
-		if(<%=session.getAttribute("LoginOK")%> != null) {
-			if (heart.className == "far fa-heart") {
-				$.ajax({
-					url: '/Whocares/addFavorite',
-					type: "POST",
-					data: {
-						FK_Customer_ID:<%=session.getAttribute("LoginOK")%>,
-						FK_Product_ID:prodId,
-						},
-					success: function() { 
-						heart.className = "fas fa-heart";
-						Swal.fire({
-							position : 'center',
-							icon : 'success',
-							title : '商品已加入追蹤清單',
-							showConfirmButton : false,
-							timer : 1000
-						})
-					},
-					error: function() { }
-
-				});
-				
-			} else {
-				$.ajax({
-					url: '/Whocares/deleteFavorite',
-					type: "POST",
-					data: {
-						FK_Customer_ID:<%=session.getAttribute("LoginOK")%>,
-						FK_Product_ID:prodId,
-						},
-					success: function() { 
-						heart.className = "far fa-heart";
-						Swal.fire({
-							position : 'center',
-							icon : 'error',
-							title : '商品已取消追蹤',
-							showConfirmButton : false,
-							timer : 1000
-						})
-					},
-					error: function() { }
-
-				});
-				
-			}
-		} else {
-			if (confirm('請先登入') == true){ 
-				window.location.href='_05_login'
-			} else {
-				return false; 
+	$.ajax({
+		url: url,
+		type: 'GET',
+		async: true,
+		success: response => {
+			let data = "";
+			for (let i = 0; i < response.products.length; i++) {
+				let product = response.products[i];
+				data += `<div class="col-3 mt-3 " id="cardWidth">
+								<div class="card text-center">
+				`;
+				if (product.promotionBean != null) {
+					data += `<div class="card-promotion">` + product.promotionBean.promoTag + `</div>`;
 				}
-		}
-	}
-</script>
+				data += `			
+									<a href="${request.getRequestURI}/Whocares/_04_productPage?id=` + product.prodId + `">
+										<img src="${request.getRequestURI}/Whocares/images/product/` + product.fileName + `" class="card-img-top" id="productImg"></a>
+									<div class="card-body">
+										<h5 class="card-title d-flex justify-content-around">
+											` + product.prodName + `<i class="far fa-heart" id="heartFavorite` + product.prodId + `" onclick="track(this,` + product.prodId + `)"></i>
+										</h5>
+									<div class="card-text mb-2">價格: ` + product.price + `元</div>
+										<form class="row-3 pt-2"
+											action="<c:url value='/buyMenu/addCart/` + product.prodId + `' />"
+											method="POST">
+											<select name="prodQTY" class="form-select"
+												style="width: 45%;" aria-label="Default select example">
+												<option selected value="1">數量</option>
+				`;
+				for (let amount = 0; amount < product.stock; amount++) {
+					data += 					`<option value="` + amount + `">` + amount + `</option>`;
+				}
+				data += `				</select>
+											<input type='hidden' name='prodId' value='` + product.prodId + `'> <Input type='hidden'name='flag' value='1'>
+											<input type="submit" class="btn btn-warning" value="加入購物車" onclick="addCart()" />
+										</form>
+									</div>
+								</div>
+							</div>
+				`;				
+			}
+			
+			let pageNav = "";
+			pageNav += `
+						<nav aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+					   `;
+			if (response.pageNo == 1) {
+				pageNav += `
+								<li class="page-item disabled">
+									<a class="page-link" tabindex="-1" aria-disabled="true">
+										上一頁
+									</a>
+								</li>
+				`;
+			} else {
+				pageNav += `
+								<li class="page-item">
+									<a class="page-link" href="#" onclick="turnPage(` + (page - 1) + `, '` + prodType + `')">
+										上一頁
+									</a>
+								</li>
+				`;				
+			}
+			
+			for (var p = 1; p <= response.totalPages; p++) {
+				if (p == response.pageNo) {
+					pageNav += `
+								<li class="page-item active">
+									<a class="page-link">
+										` + p + `
+									</a>
+								</li>
+					`;
+				} else {
+					pageNav += `
+								<li class="page-item">
+									<a class="page-link" href="#" onclick="turnPage(` + p + `, '` + prodType + `')">
+										` + p + `
+									</a>
+								</li>
+					`;
+				}
+			}
+			if (response.pageNo == response.totalPages) {
+				pageNav += `
+								<li class="page-item disabled">
+									<a class="page-link" tabindex="-1" aria-disabled="true">
+										下一頁
+									</a>
+								</li>
+				`;
+			} else {
+				pageNav += `
+								<li class="page-item">
+									<a class="page-link" href="#" onclick="turnPage(` + (page + 1) + `, '` + prodType + `')">
+										下一頁
+									</a>
+								</li>
+				`;
+			}
+			pageNav += `
+						</ul>
+					</nav>
+			`;
+			document.getElementById('mainBlock').innerHTML = data;
+			document.getElementById('pageNav').innerHTML = pageNav;
+		},
+
+		error: () => {
+			document.getElementById('mainBlock').innerHTML = "";
+		},
+	});
+}
+
+					function addCart() {
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: '商品已加入購物車',
+							showConfirmButton: false,
+							timer: 3000
+						})
+					}
+
+				</script>
 
 </head>
 
 <body>
 	<div id="body">
 		<div id="content">
-			
 
-<!-- 引入共同的頁首 -->
-<jsp:include page="/WEB-INF/fragment/topMVC.jsp" />
+
+			<!-- 引入共同的頁首 -->
+			<jsp:include page="/WEB-INF/fragment/topMVC.jsp" />
 
 			<!-- Main Start -->
 
@@ -145,7 +200,7 @@
 				<jsp:include page="/WEB-INF/fragment/buySideMenu.jsp" />
 
 				<!-- Product Start -->
-				<div class="buyProduct col-9">
+				<div id="main" class="buyProduct col-9">
 
 					<div class="container-fluid d-flex justify-content-end">
 						<select name="sortType" onChange="sort(this)">
@@ -159,15 +214,17 @@
 
 					<div
 						class="container-fluid d-flex flex-wrap justify-content-center">
-						<div class="row">
+						<div id="mainBlock" class="row">
 
 							<c:forEach var='product' items='${products}'>
 								<div class="col-3 mt-3 " id="cardWidth">
 									<div class="card text-center">
 										<c:if test="${!empty product.promotionBean}">
-											<div class="card-promotion">${product.promotionBean.promoTag}</div>
+											<div class="card-promotion">${product.promotionBean.promoTag}
+											</div>
 										</c:if>
-										<a href="<c:url value='/_04_productPage?id=${product.prodId}' />"><img
+										<a
+											href="<c:url value='/_04_productPage?id=${product.prodId}' />"><img
 											src="<c:url value='/images/product/${product.fileName}' />"
 											class="card-img-top" id="productImg" alt="..."></a>
 										<div class="card-body">
@@ -187,10 +244,10 @@
 													<c:forEach var="amount" begin="1" end="${product.stock}">
 														<option value="${amount}">${amount}</option>
 													</c:forEach>
-												</select>
-												<Input type='hidden' name='prodId' value='${product.prodId}'>
-												<Input type='hidden' name='flag' value='1'>
-												<input type="submit" class="btn btn-warning" value="加入購物車" onclick="addCart()" />
+												</select> <Input type='hidden' name='prodId'
+													value='${product.prodId}'> <Input type='hidden'
+													name='flag' value='1'> <input type="submit"
+													class="btn btn-warning" value="加入購物車" onclick="addCart()" />
 											</form>
 										</div>
 									</div>
@@ -200,7 +257,7 @@
 						</div>
 					</div>
 
-					<div class="mt-3">
+					<div id="pageNav" class="mt-3">
 						<nav aria-label="Page navigation">
 							<ul class="pagination justify-content-center">
 								<c:choose>
@@ -209,37 +266,26 @@
 											tabindex="-1" aria-disabled="true">上一頁</a></li>
 									</c:when>
 									<c:otherwise>
-										<c:choose>
-											<c:when test="${empty sortType}">
-												<li class="page-item"><a class="page-link"
-													href="<c:url value='${request.getRequestURI}?pageNo=${pageNo - 1}' /> ">
-														上一頁 </a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a class="page-link"
-													href="<c:url value='${request.getRequestURI}?sortType=${sortType}&pageNo=${pageNo - 1}' /> ">
-														上一頁 </a></li>
-											</c:otherwise>
-										</c:choose>
+										<li class="page-item">
+											<a class="page-link" href="#" onclick="turnPage(${pageNo - 1}, `${sortType}`)">
+												上一頁
+											</a>
+										</li>
 									</c:otherwise>
 								</c:choose>
 
 								<c:forEach var="currentPage" begin="1" end="${totalPages}">
 									<c:choose>
 										<c:when test="${currentPage == pageNo}">
-											<li class="page-item active"><a class="page-link">${currentPage}</a></li>
+											<li class="page-item active"><a class="page-link">${currentPage}</a>
+											</li>
 										</c:when>
 										<c:otherwise>
-											<c:choose>
-												<c:when test="${empty sortType}">
-													<li class="page-item"><a class="page-link"
-														href="<c:url value='${request.getRequestURI}?pageNo=${currentPage}' /> ">${currentPage}</a></li>
-												</c:when>
-												<c:otherwise>
-													<li class="page-item"><a class="page-link"
-														href="<c:url value='${request.getRequestURI}?sortType=${sortType}&pageNo=${currentPage}' /> ">${currentPage}</a></li>
-												</c:otherwise>
-											</c:choose>
+											<li class="page-item">
+												<a class="page-link" href="#" onclick="turnPage(${currentPage}, `${sortType}`)">
+													${currentPage}
+												</a>
+											</li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -250,18 +296,11 @@
 											tabindex="-1" aria-disabled="true">下一頁</a></li>
 									</c:when>
 									<c:otherwise>
-										<c:choose>
-											<c:when test="${empty sortType}">
-												<li class="page-item"><a class="page-link"
-													href="<c:url value='${request.getRequestURI}?pageNo=${pageNo + 1}' /> ">
-														下一頁 </a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"><a class="page-link"
-													href="<c:url value='${request.getRequestURI}?sortType=${sortType}&pageNo=${pageNo + 1}' /> ">
-														下一頁 </a></li>
-											</c:otherwise>
-										</c:choose>
+										<li class="page-item">
+											<a class="page-link" href="#" onclick="turnPage(${pageNo + 1}, `${sortType}`)">
+												下一頁
+											</a>
+										</li>
 									</c:otherwise>
 								</c:choose>
 
@@ -278,9 +317,7 @@
 	</div>
 	<!-- bootstrap -->
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
-		
-	</script>
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
