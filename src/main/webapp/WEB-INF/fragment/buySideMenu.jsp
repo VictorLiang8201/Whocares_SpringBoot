@@ -23,7 +23,7 @@
 							</c:when>
 							<c:otherwise>
 								<div class="sideList">
-									<a href="#" onclick="turnPage(${pageNo}, `${productType.prodType}`)">${productType.prodName}</a><br>
+									<a href="#" @click="turnPage(1, `${productType.prodType}`)">${productType.prodName}</a><br>
 								</div>
 							</c:otherwise>
 						</c:choose>

@@ -118,10 +118,8 @@ public class BuyMenuController {
 				} else {
 					pageable = PageRequest.of((pageNo - 1), 12, Sort.by(sort[0]).descending());
 				}
-				map.put("sortType", sort[0] + "+" + sort[1]);
 			} else {
 				pageable = PageRequest.of((pageNo - 1), 12);
-				map.put("sortType", null);
 			}
 			pagedProducts = productService.findByProductTypeBean(ProductTypeBean.builder().prodType(prodType).build(),
 					pageable);
@@ -136,21 +134,20 @@ public class BuyMenuController {
 				}
 			} else {
 				pageable = PageRequest.of((pageNo - 1), 12);
-				map.put("sortType", null);
 			}
 			pagedProducts = productService.findAll(pageable);
 			totalPages = pagedProducts.getTotalPages();
+
 		}
 		List<ProductBean> products = pagedProducts.getContent();
 		List<ProductTypeBean> productTypes = productTypeService.findAll();
 //		List<PromotionBean> promotions = promotionService.getAllPromotions();
-
+		
 		map.put("products", products);
 		map.put("productTypes", productTypes);
 //		map.put("promotions", promotions);
-		map.put("pageNo", pageNo);
 		map.put("totalPages", totalPages);
-
+		
 		return map;
 	}
 
