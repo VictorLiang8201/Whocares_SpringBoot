@@ -24,10 +24,9 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 	rel="stylesheet">
 <!-- jQuery -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- VueJS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
 <!-- sweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="<c:url value='/js/sortProducts.js' />"></script>
@@ -174,7 +173,7 @@ function addCart() {
 									</c:when>
 									<c:otherwise>
 										<li class="page-item">
-											<a class="page-link" href="#" id="nextP" @click="turnPage(${pageNo + 1}, `${vue.prodType}`)">
+											<a class="page-link" href="#" @click="turnPage(${pageNo + 1}, `${vue.prodType}`)">
 												下一頁
 											</a>
 										</li>
@@ -245,7 +244,7 @@ function addCart() {
 																style="width: 45%;" aria-label="Default select example">
 																<option selected value="1">數量</option>
 								`;
-								for (let amount = 0; amount < product.stock; amount++) {
+								for (let amount = 1; amount <= product.stock; amount++) {
 									data += 					`<option value="` + amount + `">` + amount + `</option>`;
 								}
 								data += `				</select>
@@ -311,7 +310,7 @@ function addCart() {
 							} else {
 								pageNav += `
 												<li class="page-item">
-													<a class="page-link" id="nextP" href="#" onclick="vue.turnPage(` + (this.pageNo+1) + `, '` + this.prodType + `')">
+													<a class="page-link" href="#" onclick="vue.turnPage(` + (this.pageNo+1) + `, '` + this.prodType + `')">
 														下一頁
 													</a>
 												</li>
